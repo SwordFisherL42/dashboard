@@ -17,10 +17,9 @@ jobs:
       url: https://www.nexusmods.com/users/77539483
     steps:
       - uses: actions/checkout@v3
-      - name: Get Description
-        run: export DESCRIPTION=$(<$GITHUB_WORKSPACE/description)
       - name: Update NXM Details
         run: |
+          export DESCRIPTION=$(<$GITHUB_WORKSPACE/description) &&
           python $GITHUB_WORKSPACE/.github/workflows/nxm_update.py \
             --cookie='${{ secrets.NEXUS_API_COOKIE }}' \
             --mod=${{ secrets.MOD_ID }} \
