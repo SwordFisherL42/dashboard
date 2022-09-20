@@ -3,6 +3,7 @@ import sys
 import datetime as dt
 import argparse
 import logging as log
+import os
 
 log.basicConfig(format='%(asctime)s - %(message)s',
                 datefmt='%d-%b-%y %H:%M:%S',
@@ -58,7 +59,7 @@ if __name__ == "__main__":
     parser.add_argument("-m", "--mod", type=int, required=True)
     parser.add_argument("-v", "--version", type=str, required=True)
     parser.add_argument("-n", "--name", type=str, required=True)
-    parser.add_argument("-d", "--description", type=str, required=True)
+    parser.add_argument("-d", "--description", type=str, default=os.environ.get("DESCRIPTION", "not set"))
     parser.add_argument("-s", "--summary", type=str, required=True)
     parser.add_argument("--user_agent", type=str, default=DEFAULT_USR_AGNT)
     parser.add_argument("--post_tag", type=str, default=DEFAULT_TAG)

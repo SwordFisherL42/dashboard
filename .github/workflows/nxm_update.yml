@@ -26,5 +26,4 @@ jobs:
             --mod=${{ secrets.MOD_ID }} \
             --version='${{ env.VERSION }}' \
             --name='${{ env.MOD_NAME }}' \
-            --description='$DESCRIPTION' \
             --summary='${{ env.MOD_SUMMARY }}'
