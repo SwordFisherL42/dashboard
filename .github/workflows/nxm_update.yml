@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get Description
-        run: export DESCRIPTION=$(`cat $GITHUB_WORKSPACE/description`)
+        run: export DESCRIPTION=$(<$GITHUB_WORKSPACE/description)
       - name: Update NXM Details
         run: |
           python $GITHUB_WORKSPACE/.github/workflows/nxm_update.py \
