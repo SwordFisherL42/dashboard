@@ -25,4 +25,5 @@ jobs:
             --mod=${{ secrets.MOD_ID }} \
             --version='${{ env.VERSION }}' \
             --name='${{ env.MOD_NAME }}' \
-            --summary='${{ env.MOD_SUMMARY }}'
+            --summary='${{ env.MOD_SUMMARY }}' \
+            --assembly_info=$GITHUB_WORKSPACE/AssemblyInfo.cs

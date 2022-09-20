@@ -4,24 +4,42 @@ import datetime as dt
 import argparse
 import logging as log
 import os
+import re
 
 log.basicConfig(format='%(asctime)s - %(message)s',
                 datefmt='%d-%b-%y %H:%M:%S',
                 level=log.DEBUG)
 
 
+def get_assembly_version(assembly_file) -> str:
+    pattern: str = r'AssemblyFileVersion\("(.*?)"\)'
+    with open(assembly_file, 'r') as fh:
+        fs: str = fh.read()
+    match = re.search(pattern, fs)
+    if match:
+        major, minor, patch = match.groups()[0].split('.')[:3]
+        return f'{major}.{minor}.{patch}'
+    else:
+        return '0.0.0'
+
+
 def run(options):
     description = f"""{options.description}\n""" \
-    f"""{dt.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}(UTC) - {DEFAULT_TAG}"""
+    f"""\n{dt.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}(UTC) - {DEFAULT_TAG}"""
+    version = '0.0.0'
+    if options.assembly_info is not None:
+        version = get_assembly_version(options.assembly_info)
+    elif options.version is not None:
+        version = options.version
     request_data = {
         "id": options.mod,
         "game_id": options.game,
         "type": options.type,
         "category_id": options.category,
         "name": options.name,
-        "version": options.version,
         "author": options.author,
         "summary": options.summary,
+        "version": version,
         "description": description,
         "language_id": 0,
         "tag_gore": 0,
@@ -39,7 +57,7 @@ def run(options):
         response = requests.post("https://www.nexusmods.com/Core/Libs/Common/Managers/Mods", params={"Save": ""}, data=request_data, headers=headers)
     except Exception as e:
         log.error(f"Requests Error: {e.__traceback__}")
-        sys.exit (1)
+        sys.exit(1)
     if response.status_code != 200:
         log.error("Response Status Code Error")
         sys.exit(1)
@@ -57,12 +75,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--cookie", type=str, required=True)
     parser.add_argument("-m", "--mod", type=int, required=True)
-    parser.add_argument("-v", "--version", type=str, required=True)
+    parser.add_argument("-v", "--version", type=str, default=None)
     parser.add_argument("-n", "--name", type=str, required=True)
-    parser.add_argument("-d", "--description", type=str, default=os.environ.get("DESCRIPTION", "not set"))
+    parser.add_argument("-d", "--description", type=str, default=os.environ.get("DESCRIPTION", "description not set"))
     parser.add_argument("-s", "--summary", type=str, required=True)
     parser.add_argument("--user_agent", type=str, default=DEFAULT_USR_AGNT)
     parser.add_argument("--post_tag", type=str, default=DEFAULT_TAG)
+    parser.add_argument("--assembly_info", type=str, default=None)
     parser.add_argument("--author", type=str, default="SwordFisherL42")
     parser.add_argument("--game", type=int, default=2673)
     parser.add_argument("--type", type=int, default=1)
