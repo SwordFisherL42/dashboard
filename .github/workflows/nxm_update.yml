@@ -17,6 +17,8 @@ jobs:
       url: https://www.nexusmods.com/users/77539483
     steps:
       - uses: actions/checkout@v3
+      - name: Get Description
+        run: export DESCRIPTION=$(`cat $GITHUB_WORKSPACE/modularfirearmsframework/description`)
       - name: Update NXM Details
         run: |
           python $GITHUB_WORKSPACE/.github/workflows/nxm_update.py \
@@ -24,5 +26,5 @@ jobs:
             --mod=${{ secrets.MOD_ID }} \
             --version='${{ env.VERSION }}' \
             --name='${{ env.MOD_NAME }}' \
-            --description='${{ env.MOD_DESCRIPTION }}' \
+            --description='$DESCRIPTION' \
             --summary='${{ env.MOD_SUMMARY }}'
