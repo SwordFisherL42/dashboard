@@ -19,17 +19,16 @@ def get_assembly_version(assembly_file) -> str:
     if match:
         major, minor, patch = match.groups()[0].split('.')[:3]
         return f'{major}.{minor}.{patch}'
-    else:
-        return '0.0.0'
+    return '0.0.0'
 
 
 def run(options):
     description = f"""{options.description}\n""" \
     f"""\n{dt.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}(UTC) - {DEFAULT_TAG}"""
     version = '0.0.0'
-    if options.assembly_info is not None:
+    if options.assembly_info:
         version = get_assembly_version(options.assembly_info)
-    elif options.version is not None:
+    elif options.version:
         version = options.version
     request_data = {
         "id": options.mod,
@@ -59,14 +58,16 @@ def run(options):
         log.error(f"Requests Error: {e.__traceback__}")
         sys.exit(1)
     if response.status_code != 200:
-        log.error("Response Status Code Error")
+        log.error(f"Response Status Code: {response.status_code}")
+        log.debug(response.content)
         sys.exit(1)
     response_json = response.json()
+    log.debug(response_json)
     if response_json['status']:
         log.info("Update Request Successful")
-    else:
-        log.error("Request Error")
-        sys.exit(2)
+        return
+    log.error(f"Request Error: {response_json['message']}")
+    sys.exit(2)
 
 
 if __name__ == "__main__":

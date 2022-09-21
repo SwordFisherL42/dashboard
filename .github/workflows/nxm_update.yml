@@ -4,10 +4,8 @@ on:
     branches: [ "main", "actions-runner" ]
   workflow_dispatch:
 env:
-  VERSION: 1.0.0
-  MOD_NAME: Glowing Red Eyes Reshade
+  MOD_NAME: NXM CICD Staging
   MOD_SUMMARY: Glowing Red Eyes Reshade
-  MOD_DESCRIPTION: Glowing Red Eyes Reshade
 
 jobs:
   update-mod-page:
@@ -17,13 +15,13 @@ jobs:
       url: https://www.nexusmods.com/users/77539483
     steps:
       - uses: actions/checkout@v3
-      - name: Update NXM Details
+      - name: Update Mod Details
         run: |
-          export DESCRIPTION=$(<$GITHUB_WORKSPACE/description) &&
+          export DESCRIPTION=$(<$GITHUB_WORKSPACE/.nxm/description) &&
           python $GITHUB_WORKSPACE/.github/workflows/nxm_update.py \
             --cookie='${{ secrets.NEXUS_API_COOKIE }}' \
             --mod=${{ secrets.MOD_ID }} \
-            --version='${{ env.VERSION }}' \
+            --description='$DESCRIPTION'
             --name='${{ env.MOD_NAME }}' \
             --summary='${{ env.MOD_SUMMARY }}' \
-            --assembly_info=$GITHUB_WORKSPACE/AssemblyInfo.cs
+            --assembly_info=$GITHUB_WORKSPACE/.nxm/AssemblyInfo.cs
