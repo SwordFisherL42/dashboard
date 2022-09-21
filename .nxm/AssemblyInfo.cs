@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("NXM CICD Staging")]
-[assembly: AssemblyDescription("Sample assembly info for ")]
+[assembly: AssemblyDescription("Sample assembly info")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SampleMod")]

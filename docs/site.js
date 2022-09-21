@@ -1,25 +1,28 @@
-function httpGetAsync(theUrl, modList, callback)
+var csv;
+var ids;
+var ids_link = "./tracked_ids"
+var csv_link = "https://staticstats.nexusmods.com/live_download_counts/mods/2673.csv";
+function httpGetAsync(resourceUri, callback)
 {
-    var xmlHttp = new XMLHttpRequest();
+    let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText, modList);
+            callback(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.open("GET", resourceUri, true);
     xmlHttp.send(null);
 }
-function get_totals(csv, id_list){
-    var ca = CSVToArray(csv, ",");
-    var unique_dl = 0;
-    var total_dl = 0;
-    var total_views = 0;
-    var total_mods = 0;
-    for (let i=0; i<ca.length; i++){
-        if (id_list.includes(ca[i][0])){
+function get_totals(csvArray, idList){
+    let unique_dl = 0;
+    let total_dl = 0;
+    let total_views = 0;
+    let total_mods = 0;
+    for (let i=0; i<csvArray.length; i++){
+        if (idList.includes(csvArray[i][0])){
             total_mods += 1
-            total_dl += Number(ca[i][1])
-            unique_dl += Number(ca[i][2])
-            total_views += Number(ca[i][3])
+            total_dl += Number(csvArray[i][1])
+            unique_dl += Number(csvArray[i][2])
+            total_views += Number(csvArray[i][3])
         }
     }
     console.log(`Total Downloads: ${total_dl}, Unique Downloads: ${unique_dl}, Page Views: ${total_views}`)
@@ -29,6 +32,12 @@ function get_totals(csv, id_list){
     document.getElementById("page-views").innerHTML = total_views.toLocaleString('en', {useGrouping:true});
     document.getElementById("copy-year").innerHTML = new Date().getFullYear();
 }
-csv_link = "https://staticstats.nexusmods.com/live_download_counts/mods/2673.csv";
-tracked_ids = ['2058', '5819', '5297', '1645', '2142', '6614', '5889', '2556', '5720', '2057', '1110', '6306', '2683', '2555', '4026', '5180', '3067', '5843', '1686', '1613', '1139', '1219', '6302', '2557', '3027', '3066', '5849'];
-httpGetAsync(csv_link, tracked_ids, get_totals);
+function parseHttpCsv(csvText){
+    csv = CSVToArray(csvText, ",");
+    httpGetAsync(ids_link, parseHttpTrackedId)
+}
+function parseHttpTrackedId(trackedIdText){
+    ids = trackedIdText.split("\r\n")
+    get_totals(csv, ids)
+}
+httpGetAsync(csv_link, parseHttpCsv)
