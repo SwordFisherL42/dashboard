@@ -37,7 +37,7 @@ function parseHttpCsv(csvText){
     httpGetAsync(ids_link, parseHttpTrackedId)
 }
 function parseHttpTrackedId(trackedIdText){
-    ids = trackedIdText.split("\r\n")
+    ids = trackedIdText.split("\n")
     get_totals(csv, ids)
 }
 httpGetAsync(csv_link, parseHttpCsv)
