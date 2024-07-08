@@ -1,28 +1,33 @@
 name: Orchestrator Runtime
 on:
   workflow_dispatch:
+env:
+  run_info: "default info"
+  run_status: ""
 
 jobs:
   run-orc-steps:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run Sample App
-        id: run-orc-steps
-        run: |
-          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py pass)
-          exit_code=$?
-          echo "APP_OUTPUT=$output" >> $GITHUB_ENV
-          echo "APP_EXIT_CODE=$exit_code" >> $GITHUB_ENV
-          echo $ {{ env.APP_OUTPUT}}
-          echo $ {{ env.APP_EXIT_CODE}}
+      - name: Print the global variable
+        run: echo "run_info is $run_info"
+      - name: Modify the global variable
+        run: echo "run_info=modified_in_job1" >> $GITHUB_ENV
+      # - name: Run Sample App
+      #   id: run-orc-steps
+      #   run: |
+      #     output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py pass)
+      #     exit_code=$?
+      #     echo $output
+      #     echo $exit_code
   run-orc-notify:
     needs: run-orc-steps
     uses: ./.github/workflows/orc_notifier.yml
     if: always()
     with:
-      run-status: ${{ needs.run-orc-steps.env.APP_EXIT_CODE  }}
-      run-info: ${{ needs.run-orc-steps.env.APP_OUTPUT }}
+      run-status: "0"
+      run-info: ${{ env.run_info }}
         # secrets: inherit
         # secrets:
         #   envPAT: ${{ secrets.envPAT }}
