@@ -6,6 +6,6 @@ if __name__ == "__main__":
     parser.add_argument("action", choices=["pass", "fail"])
     args = parser.parse_args(sys.argv[1:])
     if args.action == "pass":
-        pass
+        print("Sample App Pass")
     else:
         x = 1/0
