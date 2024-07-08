@@ -20,10 +20,11 @@ jobs:
         run: |
           output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py pass)
           exit_code=$?
-          echo "info=$exit_code" >> "$GITHUB_OUTPUT"
+          echo "info=$output" >> "$GITHUB_OUTPUT"
   run-orc-notify:
     needs: run-orc-steps
     runs-on: ubuntu-latest
+    if: '!canceled()'
     steps:
       - name: Print the global variable
         run: |

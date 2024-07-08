@@ -11,5 +11,5 @@ if __name__ == "__main__":
     else:
         with open("./build_file.txt", "w") as fh:
             fh.write("Sample App Log")
-        
+        print("Sample App FAIL")
         x = 1/0
