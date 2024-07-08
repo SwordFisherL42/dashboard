@@ -13,7 +13,7 @@ jobs:
       - name: Print the global variable
         run: echo "run_info is ${{ env.run_info }}"
       - name: Modify the global variable
-        run: echo "run_info=modified_in_job1" >> $GITHUB_ENV
+        run: export run_info="new run info"
       # - name: Run Sample App
       #   id: run-orc-steps
       #   run: |
@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Print the global variable
         run: |
-          run: echo "run_info is ${{ env.run_info }}"
+          echo "run_info is ${{ env.run_info }}"
     # uses: ./.github/workflows/orc_notifier.yml
     # if: always()
     # with:
