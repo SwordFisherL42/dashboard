@@ -11,8 +11,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run Step
         run: |
-          python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail && echo $? > $GITHUB_WORKSPACE/build_status.log || echo $? > $GITHUB_WORKSPACE/build_status.log
-      - name: Check Status
+          python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail
+      - name: Make File
         run: |
-          export BUILD_EXIT_CODE=$(cat $GITHUB_WORKSPACE/build_status.log) && echo "Step exited with code $BUILD_EXIT_CODE" && exit $BUILD_EXIT_CODE
-          
+          echo "Command Run Here" > $GITHUB_WORKSPACE/build_status.log
+      - name: Read Status
+        run: |
+          echo $(cat $GITHUB_WORKSPACE/build_status.log)
