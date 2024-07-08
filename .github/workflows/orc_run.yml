@@ -1,21 +1,23 @@
 name: Orchestrator Runtime
 on:
   workflow_dispatch:
-env:
-  run_info: "default info"
-  run_status: ""
 
 jobs:
   run-orc-steps:
     runs-on: ubuntu-latest
+    env:
+      run_info: "default info"
+      run_status: ""
+    outputs:
+      info: ${steps.modify-step.outputs.info}
     steps:
       - uses: actions/checkout@v4
       - name: Print the global variable
         run: echo "run_info is ${{ env.run_info }}"
       - name: Modify the global variable
-        run: echo "run_info=new_run_info" >> $GITHUB_ENV
-      - name: Print the global variable second
-        run: echo "run_info is ${{ env.run_info }}"
+        id: modify-step
+        run: |
+          echo "info=new_run_info" >> $GITHUB_OUTPUT
       # - name: Run Sample App
       #   id: run-orc-steps
       #   run: |
@@ -29,7 +31,7 @@ jobs:
     steps:
       - name: Print the global variable
         run: |
-          echo "run_info is ${{ env.run_info }}"
+          echo "run_info is ${{ needs.run-orc-steps.outputs.info }}"
     # uses: ./.github/workflows/orc_notifier.yml
     # if: always()
     # with:
