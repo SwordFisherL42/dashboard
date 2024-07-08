@@ -17,9 +17,9 @@ jobs:
   run-orc-notify:
     needs: run-orc-steps
     uses: ./.github/workflows/orc_notifier.yml
-      with:
-        run-status: ${{ env.APP_EXIT_CODE  }}
-        run-info: ${{ env.APP_OUTPUT }}
+    with:
+      run-status: ${{ env.APP_EXIT_CODE  }}
+      run-info: ${{ env.APP_OUTPUT }}
         # secrets: inherit
         # secrets:
         #   envPAT: ${{ secrets.envPAT }}
