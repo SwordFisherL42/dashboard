@@ -9,7 +9,7 @@ jobs:
       run_info: "default info"
       run_status: ""
     outputs:
-      info: ${steps.modify-step.outputs.info}
+      info: ${{ steps.modify-step.outputs.info }}
     steps:
       - uses: actions/checkout@v4
       - name: Print the global variable
@@ -17,7 +17,7 @@ jobs:
       - name: Modify the global variable
         id: modify-step
         run: |
-          echo "info=new_run_info" >> $GITHUB_OUTPUT
+          echo "info=new_run_info" >> "$GITHUB_OUTPUT"
       # - name: Run Sample App
       #   id: run-orc-steps
       #   run: |
