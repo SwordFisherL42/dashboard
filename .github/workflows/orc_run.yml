@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Print the global variable
-        run: echo "run_info is $run_info"
+        run: echo "run_info is ${{ env.run_info }}"
       - name: Modify the global variable
         run: echo "run_info=modified_in_job1" >> $GITHUB_ENV
       # - name: Run Sample App
@@ -23,11 +23,16 @@ jobs:
       #     echo $exit_code
   run-orc-notify:
     needs: run-orc-steps
-    uses: ./.github/workflows/orc_notifier.yml
-    if: always()
-    with:
-      run-status: "0"
-      run-info: $run_info
-        # secrets: inherit
-        # secrets:
-        #   envPAT: ${{ secrets.envPAT }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the global variable
+        run: |
+          run: echo "run_info is ${{ env.run_info }}"
+    # uses: ./.github/workflows/orc_notifier.yml
+    # if: always()
+    # with:
+    #   run-status: "0"
+    #   run-info: ${{ needs.run-orc-steps.env.run_info }}
+    #     # secrets: inherit
+    #     # secrets:
+    #     #   envPAT: ${{ secrets.envPAT }}
