@@ -5,26 +5,22 @@ on:
 jobs:
   run-orc-steps:
     runs-on: ubuntu-latest
-    env:
-      run_info: "default info"
-      run_status: ""
     outputs:
-      info: ${{ steps.modify-step.outputs.info }}
+      info: ${{ steps.run-orchestrator.outputs.info }}
     steps:
       - uses: actions/checkout@v4
-      - name: Print the global variable
-        run: echo "run_info is ${{ env.run_info }}"
+      # - name: Print the global variable
+      #   run: echo "run_info is ${{ env.run_info }}"
       - name: Modify the global variable
         id: modify-step
         run: |
           echo "info=new_run_info" >> "$GITHUB_OUTPUT"
-      # - name: Run Sample App
-      #   id: run-orc-steps
-      #   run: |
-      #     output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py pass)
-      #     exit_code=$?
-      #     echo $output
-      #     echo $exit_code
+      - name: Run Sample App
+        id: run-orchestrator
+        run: |
+          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py pass)
+          exit_code=$?
+          echo "info=$exit_code" >> "$GITHUB_OUTPUT"
   run-orc-notify:
     needs: run-orc-steps
     runs-on: ubuntu-latest
