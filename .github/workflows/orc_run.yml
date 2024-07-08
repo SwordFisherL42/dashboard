@@ -1,0 +1,24 @@
+name: Orchestrator Runtime
+on:
+  workflow_dispatch:
+
+jobs:
+  run-orc-steps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Sample App
+        id: run-sample-app
+        run: |
+          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail)
+          exit_code=$?
+          echo "APP_OUTPUT=$output" >> $GITHUB_ENV
+          echo "APP_EXIT_CODE=$exit_code" >> $GITHUB_ENV
+      - uses: ./.github/workflows/orc_notifier.yml@main
+        if: always()
+        with:
+          run-status: ${{ env.APP_EXIT_CODE  }}
+          run-info: ${{ env.APP_OUTPUT }}
+        # secrets: inherit
+        # secrets:
+        #   envPAT: ${{ secrets.envPAT }}

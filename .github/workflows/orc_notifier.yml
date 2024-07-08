@@ -1,0 +1,30 @@
+name: Orchestration Notifier
+on:
+  workflow_call:
+    inputs:
+      run-status:
+        required: true
+        type: string
+      run-info:
+        required: true
+        type: string
+        
+    # secrets:
+    #   slack-token:
+    #     required: true
+  workflow_dispatch:
+
+
+jobs:
+  orchestrator-notifications:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Notifier
+        id: run-notify-app
+        run: |
+          python $GITHUB_WORKSPACE/.github/workflows/notifier.py ${{ inputs.run-status }} "${{ inputs.run-info }}"
+
+    # uses: fisher/dashboard/.github/workflows/persistant_steps.yml@main
+    
+    
