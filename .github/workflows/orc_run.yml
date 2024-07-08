@@ -14,11 +14,11 @@ jobs:
           exit_code=$?
           echo "APP_OUTPUT=$output" >> $GITHUB_ENV
           echo "APP_EXIT_CODE=$exit_code" >> $GITHUB_ENV
-      - uses: ./.github/workflows/orc_notifier.yml@main
-        if: always()
-        with:
-          run-status: ${{ env.APP_EXIT_CODE  }}
-          run-info: ${{ env.APP_OUTPUT }}
+  run-orc-notify:
+    uses: ./.github/workflows/orc_notifier.yml@main
+      with:
+        run-status: ${{ env.APP_EXIT_CODE  }}
+        run-info: ${{ env.APP_OUTPUT }}
         # secrets: inherit
         # secrets:
         #   envPAT: ${{ secrets.envPAT }}
