@@ -27,7 +27,7 @@ jobs:
     if: always()
     with:
       run-status: "0"
-      run-info: ${{ run_info }}
+      run-info: $run_info
         # secrets: inherit
         # secrets:
         #   envPAT: ${{ secrets.envPAT }}
