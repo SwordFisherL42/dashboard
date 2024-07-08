@@ -13,8 +13,6 @@ jobs:
         run: |
           python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail
       - name: Make File
+        if: always()
         run: |
-          echo "Command Run Here" > $GITHUB_WORKSPACE/build_status.log
-      - name: Read Status
-        run: |
-          echo $(cat $GITHUB_WORKSPACE/build_status.log)
+          echo $(cat $GITHUB_WORKSPACE/build_file.txt)

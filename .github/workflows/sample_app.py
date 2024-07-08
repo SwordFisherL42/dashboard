@@ -8,4 +8,7 @@ if __name__ == "__main__":
     if args.action == "pass":
         print("Sample App Pass")
     else:
+        with open("./build_file.txt", "w") as fh:
+            fh.write("Sample App Log")
+        
         x = 1/0
