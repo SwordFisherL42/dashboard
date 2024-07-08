@@ -8,14 +8,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run Sample App
-        id: run-sample-app
+        id: run-orc-steps
         run: |
           output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail)
           exit_code=$?
           echo "APP_OUTPUT=$output" >> $GITHUB_ENV
           echo "APP_EXIT_CODE=$exit_code" >> $GITHUB_ENV
   run-orc-notify:
-    uses: ./.github/workflows/orc_notifier.yml@main
+    needs: run-orc-steps
+    uses: ./.github/workflows/orc_notifier.yml
       with:
         run-status: ${{ env.APP_EXIT_CODE  }}
         run-info: ${{ env.APP_OUTPUT }}
