@@ -17,6 +17,7 @@ jobs:
   run-orc-notify:
     needs: run-orc-steps
     uses: ./.github/workflows/orc_notifier.yml
+    if: always()
     with:
       run-status: ${{ needs.run-orc-steps.outputs.APP_EXIT_CODE  }}
       run-info: ${{ needs.run-orc-steps.outputs.APP_OUTPUT }}
