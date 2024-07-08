@@ -13,7 +13,9 @@ jobs:
       - name: Print the global variable
         run: echo "run_info is ${{ env.run_info }}"
       - name: Modify the global variable
-        run: export run_info="new run info"
+        run: echo "run_info=new_run_info" >> $GITHUB_ENV
+      - name: Print the global variable second
+        run: echo "run_info is ${{ env.run_info }}"
       # - name: Run Sample App
       #   id: run-orc-steps
       #   run: |
