@@ -1,5 +1,7 @@
 name: Orchestrator Runtime
 on:
+  push:
+    branches: ["orc-test"]
   workflow_dispatch:
 
 jobs:
@@ -24,7 +26,7 @@ jobs:
   run-orc-notify:
     needs: run-orc-steps
     runs-on: ubuntu-latest
-    if: '!canceled()'
+    if: success() || failure()
     steps:
       - name: Print the global variable
         run: |
