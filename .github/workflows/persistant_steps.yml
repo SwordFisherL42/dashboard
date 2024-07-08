@@ -1,0 +1,18 @@
+name: Persistant Steps
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  run-persistant-steps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Step
+        run: |
+          python $GITHUB_WORKSPACE/.github/workflows/sample_app.py pass && echo $? > /build_status.log || echo $? > /build_status.log
+      - name: Check Status
+        run: |
+          export BUILD_EXIT_CODE=$(cat /build_status.log) && echo "Step exited with code $BUILD_EXIT_CODE" && exit $BUILD_EXIT_CODE
+          

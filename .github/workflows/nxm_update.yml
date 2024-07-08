@@ -1,7 +1,7 @@
 name: NXM-Update
 on:
   push:
-    branches: [ "main", "actions-runner" ]
+    branches: [ "actions-runner" ]
   workflow_dispatch:
 env:
   MOD_NAME: NXM CICD Staging
