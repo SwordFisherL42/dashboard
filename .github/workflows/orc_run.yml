@@ -14,6 +14,8 @@ jobs:
           exit_code=$?
           echo "APP_OUTPUT=$output" >> $GITHUB_ENV
           echo "APP_EXIT_CODE=$exit_code" >> $GITHUB_ENV
+          echo $ {{ env.APP_OUTPUT}}
+          echo $ {{ env.APP_EXIT_CODE}}
   run-orc-notify:
     needs: run-orc-steps
     uses: ./.github/workflows/orc_notifier.yml
