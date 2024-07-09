@@ -9,7 +9,9 @@ if __name__ == "__main__":
     args = parser.parse_args(sys.argv[1:])
     if args.status == "0":
         print("Notify of Pass")
+        # Success Message
     else:
         print("Notify of Failure")
+        # Failure Message
     print(args.info)
     print(args.link)

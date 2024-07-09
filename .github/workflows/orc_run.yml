@@ -10,22 +10,18 @@ jobs:
     outputs:
       info: ${{ steps.run-orchestrator.outputs.info }}
       status: ${{ steps.run-orchestrator.outputs.status }}
-      github_link: ${{ steps.run-orchestrator.outputs.github_link }}
-      environment: ${{ steps.run-orchestrator.outputs.environment }}
     steps:
       - uses: actions/checkout@v4
       - name: Run Sample App
         id: run-orchestrator
         run: |
           set +e
-          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail 2>&1)
+          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py pass 2>&1)
           exit_code=$?
-          echo "$output"
           echo "info="$output"" >> "$GITHUB_OUTPUT"
           echo "status="$exit_code"" >> "$GITHUB_OUTPUT"
-          echo "github_link="$github_link"" >> "$GITHUB_OUTPUT"
-          echo "environment="$environment"" >> "$GITHUB_OUTPUT"
           set -e
+          echo "$output"
           exit $exit_code
   run-orc-notify:
     needs: run-orc-steps
@@ -33,8 +29,7 @@ jobs:
     if: success() || failure()
     with:
       run-status: ${{ needs.run-orc-steps.outputs.status }}
-      run-info: ${{ needs.run-orc-steps.outputs.environment }}
-      github-link: ${{ needs.run-orc-steps.outputs.github_link }}
+      run-info: ${{ needs.run-orc-steps.outputs.info }}
         # secrets: inherit
         # secrets:
         #   envPAT: ${{ secrets.envPAT }}
