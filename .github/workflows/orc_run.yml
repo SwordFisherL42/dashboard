@@ -18,9 +18,9 @@ jobs:
           set +e
           output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail 2>&1)
           exit_code=$?
-          echo "status="$output"" >> "$GITHUB_OUTPUT"
+          echo "info="$output"" >> "$GITHUB_OUTPUT"
           echo "$output"
-          echo "info="$exit_code"" >> "$GITHUB_OUTPUT"
+          echo "status="$exit_code"" >> "$GITHUB_OUTPUT"
           echo "Exit code is $exit_code"
           set -e
           exit $exit_code
