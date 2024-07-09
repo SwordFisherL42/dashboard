@@ -11,8 +11,8 @@ if __name__ == "__main__":
     environment = None
     commit_sha = None
     for data in info_data:
-        if "github_link:" in data:
-            github_link = data.split("github_link:")[1].strip(" ,")
+        if "Github Link:" in data:
+            github_link = data.split("Github Link:")[1].strip(" ,")
         elif "environment:" in data:
             environment = data.split("environment:")[1].strip(" ,")
         elif "commit:" in data:
@@ -23,4 +23,3 @@ if __name__ == "__main__":
     else:
         print(f"Failed to deploy on Commit {commit_sha} for environment {environment}\nGithub Link: {github_link}")
         # Failure Message
-    print(args.info)
