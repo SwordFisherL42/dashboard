@@ -4,7 +4,7 @@ import os
 import logging
 
 if __name__ == "__main__":
-    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="[%(levelname)s] %(message)s,")
     parser = argparse.ArgumentParser()
     parser.add_argument("action", choices=["pass", "fail"])
     args = parser.parse_args(sys.argv[1:])
