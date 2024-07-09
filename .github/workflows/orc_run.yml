@@ -16,8 +16,9 @@ jobs:
         id: run-orchestrator
         run: |
           set +e
-          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail 2>&1)
-          echo "status=$output" >> "$GITHUB_OUTPUT"
+          export output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail 2>&1)
+          echo "status="$output"" >> "$GITHUB_OUTPUT"
+          echo "$output"
   run-orc-notify:
     needs: run-orc-steps
     runs-on: ubuntu-latest
