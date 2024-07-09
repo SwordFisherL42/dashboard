@@ -7,10 +7,6 @@ on:
 jobs:
   run-orc-steps:
     runs-on: ubuntu-latest
-    env:
-      github_link: ""
-      environment: ""
-      message_content: ""
     outputs:
       info: ${{ steps.run-orchestrator.outputs.info }}
       status: ${{ steps.run-orchestrator.outputs.status }}
