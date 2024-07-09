@@ -16,7 +16,7 @@ jobs:
         id: run-orchestrator
         run: |
           set +e
-          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail)
+          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py pass)
           exit_code=$?
           echo "info="$output"" >> "$GITHUB_OUTPUT"
           echo "status="$exit_code"" >> "$GITHUB_OUTPUT"

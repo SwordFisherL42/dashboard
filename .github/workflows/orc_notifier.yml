@@ -8,9 +8,6 @@ on:
       run-info:
         required: true
         type: string
-      github-link:
-        type: string
-        required: false
     # secrets:
     #   slack-token:
     #     required: true
