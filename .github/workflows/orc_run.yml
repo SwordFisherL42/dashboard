@@ -22,6 +22,8 @@ jobs:
           echo "$output"
           echo "info="$exit_code"" >> "$GITHUB_OUTPUT"
           echo "Exit code is $exit_code"
+          set -e
+          exit $exit_code
   run-orc-notify:
     needs: run-orc-steps
     runs-on: ubuntu-latest
