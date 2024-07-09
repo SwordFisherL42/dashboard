@@ -12,11 +12,11 @@ if __name__ == "__main__":
     commit_sha = None
     for data in info_data:
         if "github_link:" in data:
-            github_link = data.split("github_link:").strip(" ,")
+            github_link = data.split("github_link:")[1].strip(" ,")
         elif "environment:" in data:
-            environment = data.split("environment:").strip(" ,")
+            environment = data.split("environment:")[1].strip(" ,")
         elif "commit:" in data:
-            commit_sha = data.split("commit:").strip(" ,")
+            commit_sha = data.split("commit:")[1].strip(" ,")
     if args.status == "0":
         print(f"Sucessfully Deployed on Commit {commit_sha} for environment {environment}\nGithub Link: {github_link}")
         # Success Message
