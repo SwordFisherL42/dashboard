@@ -27,8 +27,8 @@ jobs:
           echo "$output"
           echo "info="$output"" >> "$GITHUB_OUTPUT"
           echo "status="$exit_code"" >> "$GITHUB_OUTPUT"
-          echo "github_link="${{ env.github_link }}"" >> "$GITHUB_OUTPUT"
-          echo "environment="${{ env.environment }}"" >> "$GITHUB_OUTPUT"
+          echo "github_link="$github_link"" >> "$GITHUB_OUTPUT"
+          echo "environment="$environment"" >> "$GITHUB_OUTPUT"
           set -e
           exit $exit_code
   run-orc-notify:
