@@ -7,9 +7,15 @@ on:
 jobs:
   run-orc-steps:
     runs-on: ubuntu-latest
+    env:
+      github_link: ""
+      environment: ""
+      message_content: ""
     outputs:
       info: ${{ steps.run-orchestrator.outputs.info }}
       status: ${{ steps.run-orchestrator.outputs.status }}
+      github_link: ${{ steps.run-orchestrator.outputs.github_link }}
+      environment: ${{ steps.run-orchestrator.outputs.environment }}
     steps:
       - uses: actions/checkout@v4
       - name: Run Sample App
@@ -17,11 +23,12 @@ jobs:
         run: |
           set +e
           output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail 2>&1)
+          echo "$output"
           exit_code=$?
           echo "info="$output"" >> "$GITHUB_OUTPUT"
-          echo "$output"
           echo "status="$exit_code"" >> "$GITHUB_OUTPUT"
-          echo "Exit code is $exit_code"
+          echo "github_link="$github_link"" >> "$GITHUB_OUTPUT"
+          echo "environment="$environment"" >> "$GITHUB_OUTPUT"
           set -e
           exit $exit_code
   run-orc-notify:
@@ -30,7 +37,8 @@ jobs:
     if: success() || failure()
     with:
       run-status: ${{ needs.run-orc-steps.outputs.status }}
-      run-info: ${{ needs.run-orc-steps.outputs.info }}
+      run-info: ${{ needs.run-orc-steps.outputs.environment }}
+      github-link: ${{ needs.run-orc-steps.outputs.github_link }}
         # secrets: inherit
         # secrets:
         #   envPAT: ${{ secrets.envPAT }}

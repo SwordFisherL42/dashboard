@@ -8,7 +8,9 @@ on:
       run-info:
         required: true
         type: string
-        
+      github-link:
+        type: string
+        required: false
     # secrets:
     #   slack-token:
     #     required: true
@@ -23,8 +25,6 @@ jobs:
       - name: Run Notifier
         id: run-notify-app
         run: |
-          python $GITHUB_WORKSPACE/.github/workflows/notifier.py "${{ inputs.run-status }}" "${{ inputs.run-info }}"
+          python $GITHUB_WORKSPACE/.github/workflows/notifier.py "${{ inputs.run-status }}" "${{ inputs.run-info }}" "${{ inputs.github-link }}"
 
-    # uses: fisher/dashboard/.github/workflows/persistant_steps.yml@main
-    
     
