@@ -26,18 +26,11 @@ jobs:
           exit $exit_code
   run-orc-notify:
     needs: run-orc-steps
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/orc_notifier.yml
     if: success() || failure()
-    steps:
-      - name: Print the global variable
-        run: |
-          echo "Run info is ${{ needs.run-orc-steps.outputs.status }}"
-          echo "Run Exit Code is ${{ needs.run-orc-steps.outputs.info }}"
-    # uses: ./.github/workflows/orc_notifier.yml
-    # if: always()
-    # with:
-    #   run-status: "0"
-    #   run-info: ${{ needs.run-orc-steps.env.run_info }}
-    #     # secrets: inherit
-    #     # secrets:
-    #     #   envPAT: ${{ secrets.envPAT }}
+    with:
+      run-status: ${{ needs.run-orc-steps.outputs.status }}
+      run-info: ${{ needs.run-orc-steps.outputs.info }}
+        # secrets: inherit
+        # secrets:
+        #   envPAT: ${{ secrets.envPAT }}
