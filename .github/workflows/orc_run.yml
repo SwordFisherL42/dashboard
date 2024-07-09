@@ -21,7 +21,8 @@ jobs:
       - name: Run Sample App
         id: run-orchestrator
         run: |
-          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail 2>&1)
+          output="$(path/myExcecutable-bin 2>&1)"
+          echo $output
           exit_code=$?
           echo "info=$output" >> "$GITHUB_OUTPUT"
           echo "status=$exit_code" >> "$GITHUB_OUTPUT"
