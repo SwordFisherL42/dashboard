@@ -18,5 +18,5 @@ if __name__ == "__main__":
         try:
             x = 1/0
         except Exception as e:
-            logging.error("Error in runtime: %s" % str(e))
+            logging.error("error: %s" % str(e))
             raise e
