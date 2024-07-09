@@ -21,7 +21,7 @@ jobs:
       - name: Run Sample App
         id: run-orchestrator
         run: |
-          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail)
+          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail 2>&1)
           exit_code=$?
           echo "info=$output" >> "$GITHUB_OUTPUT"
           echo "status=$exit_code" >> "$GITHUB_OUTPUT"
@@ -33,7 +33,7 @@ jobs:
       - name: Print the global variable
         run: |
           echo "Run info is ${{ needs.run-orc-steps.outputs.info }}"
-          echo "Run status exit code is ${{ needs.run-orc-steps.outputs.status }}"
+          echo "Run status exit code is ${{ needs.run-orc-steps.outputs.info }}"
     # uses: ./.github/workflows/orc_notifier.yml
     # if: always()
     # with:
