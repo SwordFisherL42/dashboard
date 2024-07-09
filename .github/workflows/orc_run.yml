@@ -12,20 +12,16 @@ jobs:
       status: ${{ steps.run-orchestrator.outputs.status }}
     steps:
       - uses: actions/checkout@v4
-      # - name: Print the global variable
-      #   run: echo "run_info is ${{ env.run_info }}"
-      # - name: Modify the global variable
-      #   id: modify-step
-      #   run: |
-      #     echo "info=new_run_info" >> "$GITHUB_OUTPUT"
       - name: Run Sample App
         id: run-orchestrator
         run: |
-          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py pass)
-          echo $output
-          exit_code=$?
-          echo "info=$output" >> "$GITHUB_OUTPUT"
-          echo "status=$exit_code" >> "$GITHUB_OUTPUT"
+          set +e
+          output=$(python $GITHUB_WORKSPACE/.github/workflows/sample_app.py pass 2>&1)
+          echo "status=$output" >> "$GITHUB_OUTPUT"
+      - name: Flag Failure for Notification
+        if: failure()
+        run: |
+           echo "status="Orchestrator Failed"" >> "$GITHUB_OUTPUT"
   run-orc-notify:
     needs: run-orc-steps
     runs-on: ubuntu-latest
@@ -33,8 +29,7 @@ jobs:
     steps:
       - name: Print the global variable
         run: |
-          echo "Run info is ${{ needs.run-orc-steps.outputs.info }}"
-          echo "Run status exit code is ${{ needs.run-orc-steps.outputs.info }}"
+          echo "Run info is ${{ needs.run-orc-steps.outputs.status }}"
     # uses: ./.github/workflows/orc_notifier.yml
     # if: always()
     # with:
