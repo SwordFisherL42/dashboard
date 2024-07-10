@@ -2,10 +2,10 @@ name: Orchestration Notifier
 on:
   workflow_call:
     inputs:
-      run-status:
+      status:
         required: true
         type: string
-      run-info:
+      info:
         required: true
         type: string
     # secrets:
@@ -22,6 +22,6 @@ jobs:
       - name: Run Notifier
         id: run-notify-app
         run: |
-          python $GITHUB_WORKSPACE/.github/workflows/notifier.py "${{ inputs.run-status }}" "${{ inputs.run-info }}"
+          python $GITHUB_WORKSPACE/.github/workflows/notifier.py "${{ inputs.status }}" "${{ inputs.info }}"
 
     
