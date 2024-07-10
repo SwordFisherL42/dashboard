@@ -17,7 +17,7 @@ jobs:
         env:
           GITHUB_ACTIONS: "tue"
         run: |
-          python $GITHUB_WORKSPACE/.github/workflows/sample_app.py pass
+          python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail
   run-orc-notify:
     needs: run-orc-steps
     uses: ./.github/workflows/orc_notifier.yml
