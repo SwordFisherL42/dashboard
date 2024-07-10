@@ -20,7 +20,7 @@ if __name__ == "__main__":
     #         commit_sha = data.split("commit:")[1].strip(" ,")
     #     elif "error:" in data:
     #         error = data.split("error:")[1].strip(" ,")
-    if args.status == "0":
+    if args.status.lower() == "success":
         print(f"Success message: {args.status} {args.info}")
         # print(f"Sucessfully Deployed on Commit {commit_sha} for environment {environment}\nGithub Link: {github_link}")
         # Success Message
