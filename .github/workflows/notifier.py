@@ -20,4 +20,4 @@ if __name__ == "__main__":
         # print(f"Failed to deploy on Commit {commit_sha} for environment {environment}\nGithub Link: {github_link}\nError: {error}")
         # Failure Message
     else:
-        print(f"Unexpect status: {args.status}")
+        print(f'Unexpect status: "{args.status}" "{args.environment}" "{args.commit}" "{args.link}" "{args.error}"')
