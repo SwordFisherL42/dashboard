@@ -4,8 +4,8 @@ import sys
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--status", choices=['success', 'failure', 'dev'], required=True)
-    parser.add_argument("--environment", required=True)
+    parser.add_argument("--status")
+    parser.add_argument("--environment")
     parser.add_argument("--commit")
     parser.add_argument("--link")
     parser.add_argument("--error")
@@ -19,3 +19,5 @@ if __name__ == "__main__":
         print(f'Fail message: "{args.status}" "{args.environment}" "{args.commit}" "{args.link}" "{args.error}"') 
         # print(f"Failed to deploy on Commit {commit_sha} for environment {environment}\nGithub Link: {github_link}\nError: {error}")
         # Failure Message
+    else:
+        print(f"Unexpect status: {args.status}")
