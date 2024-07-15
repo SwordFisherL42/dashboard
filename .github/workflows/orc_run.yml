@@ -20,7 +20,7 @@ jobs:
         env:
           GITHUB_ACTIONS: "true"
         run: |
-          python $GITHUB_WORKSPACE/.github/workflows/sample_app.py fail
+          python $GITHUB_WORKSPACE/.github/workflows/sample_app.py dne
   run-orc-notify:
     needs: run-orc-steps
     uses: ./.github/workflows/orc_notifier.yml
