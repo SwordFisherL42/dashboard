@@ -2,29 +2,20 @@ import argparse
 import sys
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
-    parser.add_argument("status")
-    parser.add_argument("info")
-    args = parser.parse_args(sys.argv[1:])
-    # info_data = args.info.split(",")
-    github_link = None
-    environment = None
-    commit_sha = None
-    error = None
-    # for data in info_data:
-    #     if "Github Link:" in data:
-    #         github_link = data.split("Github Link:")[1].strip(" ,")
-    #     elif "environment:" in data:
-    #         environment = data.split("environment:")[1].strip(" ,")
-    #     elif "commit:" in data:
-    #         commit_sha = data.split("commit:")[1].strip(" ,")
-    #     elif "error:" in data:
-    #         error = data.split("error:")[1].strip(" ,")
-    if args.status.lower() == "success":
-        print(f"Success message: {args.status} {args.info}")
+    parser.add_argument("--status", choices=['success', 'failure', 'dev'], required=True)
+    parser.add_argument("--environment", required=True)
+    parser.add_argument("--commit")
+    parser.add_argument("--link")
+    parser.add_argument("--error")
+    args = parser.parse_args()
+
+    if args.status == "success":
+        print(f'Success message: "{args.status}" "{args.environment}" "{args.commit}" "{args.link}" "{args.error}"')
         # print(f"Sucessfully Deployed on Commit {commit_sha} for environment {environment}\nGithub Link: {github_link}")
         # Success Message
-    else:
-        print(f"Fail message: {args.status} {args.info}")
+    elif args.status == "failure":
+        print(f'Fail message: "{args.status}" "{args.environment}" "{args.commit}" "{args.link}" "{args.error}"') 
         # print(f"Failed to deploy on Commit {commit_sha} for environment {environment}\nGithub Link: {github_link}\nError: {error}")
         # Failure Message
