@@ -2,6 +2,8 @@ import argparse
 import sys
 import os
 import logging
+import json
+
 
 def write_to_github_output(name: str, value: str):
     is_action = os.getenv('GITHUB_ACTION')
@@ -18,19 +20,22 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("action", choices=["pass", "fail", "dev"])
     args = parser.parse_args(sys.argv[1:])
-    write_to_github_output("status", "dev")
-    write_to_github_output("environment", "development")
-    write_to_github_output("github_link", "http://github.com/1234")
-    write_to_github_output("commit", "abcde12345")
+    runtime_data  = {}
+    runtime_data["environment"] = "development"
+    runtime_data["github_link"] = "http://github.com/1234"
+    runtime_data["commit"] = "abcde12345"
+    runtime_data["status"] = ""
     if args.action == "pass":
         print("Sample App Pass")
-        write_to_github_output("status", "success")
-    else:
+        runtime_data["status"] = "Sample App Pass"
+        write_to_github_output("runtime-data", json.dumps(runtime_data))
+    elif args.action == "fail":
         print("Sample App FAIL")
         try:
             x = 1/0
         except Exception as e:
             logging.error("error: %s" % str(e))
-            write_to_github_output("status", "error")
-            write_to_github_output("error", str(e))
+            runtime_data["status"] = "Sample App FAIL"
+            runtime_data["error"] = str(e)
+            write_to_github_output("runtime-data", json.dumps(runtime_data))
             raise e

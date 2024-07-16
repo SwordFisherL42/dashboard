@@ -8,11 +8,7 @@ jobs:
   run-orc-steps:
     runs-on: ubuntu-latest
     outputs:
-      status: ${{ steps.run-orchestrator.outputs.status }}
-      environment: ${{ steps.run-orchestrator.outputs.environment }}
-      commit: ${{ steps.run-orchestrator.outputs.commit }}
-      github_link: ${{ steps.run-orchestrator.outputs.github_link }}
-      error: ${{ steps.run-orchestrator.outputs.error }}
+      runtime-data: ${{ steps.run-orchestrator.outputs.runtime-data }}
     steps:
       - uses: actions/checkout@v4
       - name: Run Sample App
@@ -26,11 +22,7 @@ jobs:
     uses: ./.github/workflows/orc_notifier.yml
     if: success() || failure()
     with:
-      status: ${{ needs.run-orc-steps.outputs.status }}
-      environment: ${{ needs.run-orc-steps.outputs.environment }}
-      commit: ${{ needs.run-orc-steps.outputs.commit }}
-      github_link: ${{ needs.run-orc-steps.outputs.github_link }}
-      error: ${{ needs.run-orc-steps.outputs.error }}
+      runtime-data: ${{ needs.run-orc-steps.outputs.runtime-data }}
         # secrets: inherit
         # secrets:
         #   envPAT: ${{ secrets.envPAT }}
