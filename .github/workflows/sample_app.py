@@ -25,6 +25,7 @@ if __name__ == "__main__":
     runtime_data["github_link"] = "http://github.com/1234"
     runtime_data["commit"] = "abcde12345"
     runtime_data["status"] = ""
+    write_to_github_output("runtime-data", json.dumps(runtime_data))
     if args.action == "pass":
         print("Sample App Pass")
         runtime_data["status"] = "Sample App Pass"

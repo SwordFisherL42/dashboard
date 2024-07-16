@@ -16,10 +16,18 @@ if __name__ == "__main__":
     if args.data:
         try:
             runtime_data = json.loads(args.data)
-            print(runtime_data)
             status = runtime_data.get("status")
             environment = runtime_data.get("environment")
-        except:
+            link = runtime_data.get("github_link")
+            commit = runtime_data.get("commit")
+            action = runtime_data.get("action")
+            error = runtime_data.get("error")
+            print(f'Status: "{status}", Environment: "{environment}",  Commit: "{commit}", github_link: "{link}" error: "{error}"')
+                # elif args.status == "failure":
+                #     print(f'Fail message: "{args.status}" "{args.environment}" "{args.commit}" "{args.link}" "{args.error}"') 
+                #     # print(f"Failed to deploy on Commit {commit_sha} for environment {environment}\nGithub Link: {github_link}\nError: {error}")
+                #     # Failure Message
+        except json.decoder.JSONDecodeErro as e:
             print("Unable to de-serialize runtime data")
             
 
