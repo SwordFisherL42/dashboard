@@ -2,17 +2,8 @@ name: Orchestration Notifier
 on:
   workflow_call:
     inputs:
-      status:
+      runtime-data:
         required: true
-        type: string
-      environment:
-        required: true
-        type: string
-      commit:
-        type: string
-      github_link:
-        type: string
-      error:
         type: string
     # secrets:
     #   slack-token:
@@ -28,10 +19,5 @@ jobs:
       - name: Run Notifier
         id: run-notify-app
         run: |
-          python $GITHUB_WORKSPACE/.github/workflows/notifier.py --status="${{ inputs.status }}" \
-          --environment="${{ inputs.environment }}" \
-          --commit="${{ inputs.commit }}" \
-          --link="${{ inputs.github_link }}" \
-          --error="${{ inputs.error }}"
-
+          python $GITHUB_WORKSPACE/.github/workflows/notifier.py --data='${{ inputs.runtime-data }}'
     
