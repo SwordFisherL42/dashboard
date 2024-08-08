@@ -23,5 +23,4 @@ runs:
       id: run-docker-container
       shell: bash
       run: |
-        echo "runtime-data=sample_data_here" >> $GITHUB_OUTPUT
-        docker run ${{ inputs.options }} ${{ inputs.image }} ${{ inputs.args }}
+        docker run -e "GITHUB_OUTPUT=/github-output" -v "$GITHUB_OUTPUT:/github-output" ${{ inputs.options }} ${{ inputs.image }} ${{ inputs.args }}
