@@ -30,6 +30,8 @@ on:
 jobs:
   alpha-caller:
     runs-on: ubuntu-latest
+    outputs:
+      runtime-data: ${{ steps.alpha-caller-run-img.outputs.runtime-data }}
     steps:
       - uses: SwordFisherL42/dashboard/.github/actions/docker-run-img@main
         name: Run Docker image
@@ -41,4 +43,11 @@ jobs:
       - name: Check Outputs
         run: |
           echo ${{ steps.alpha-caller-run-img.outputs.runtime-data }}
-          
+  beta-caller:
+    needs: alpha-caller
+    runs-on: ubuntu-latest
+    if: success() || failure()
+    steps:
+      - name: Second job getter
+        run: |
+          echo "Runtime data is ${{ needs.alpha-caller.outputs.runtime-data }}"
