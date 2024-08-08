@@ -18,11 +18,11 @@ on:
         description: "image and tag to run"
         default: docker.io/library/hello-world:latest
         type: string
-      args:
+      options:
         required: false
         description: "image options"
         type: string
-      options:
+      args:
         required: false
         description: "image args"
         type: string
@@ -38,3 +38,7 @@ jobs:
           image: ${{ inputs.image }}
           args: ${{ inputs.args }}
           options: ${{ inputs.options }}
+      - name: Check Outputs
+        run: |
+          echo ${{ steps.alpha-caller-run-img.outputs.runtime-data }}
+          
