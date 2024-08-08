@@ -1,0 +1,40 @@
+name: Alpha Caller
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: false
+        type: string
+      args:
+        required: false
+        type: string
+      options:
+        required: false
+        type: string
+  workflow_dispatch:
+    inputs:
+      image:
+        required: false
+        description: "image and tag to run"
+        default: docker.io/library/hello-world:latest
+        type: string
+      args:
+        required: false
+        description: "image options"
+        type: string
+      options:
+        required: false
+        description: "image args"
+        type: string
+
+jobs:
+  alpha-caller:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: SwordFisherL42/dashboard/.github/actions/docker-run-img@main
+        name: Run Docker image
+        id: alpha-caller-run-img
+        with:
+          image: ${{ inputs.image }}
+          args: ${{ inputs.args }}
+          options: ${{ inputs.options }}

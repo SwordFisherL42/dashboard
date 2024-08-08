@@ -1,0 +1,26 @@
+name: Run GCR image container 
+description: 'run docker image'
+inputs:
+  image:
+    description: "image and tag to run"
+    required: true
+  options:
+    description: "image options"
+    required: false
+  args:
+    description: "image args"
+    required: false
+
+outputs:
+  runtime-data:
+    description: "data from container"
+    value: ${{ steps.run-docker-container.outputs.runtime-data }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run Docker container
+      id: run-docker-container
+      shell: bash
+      run: |
+        docker run ${{ inputs.options }} ${{ inputs.image }} ${{ inputs.args }}
